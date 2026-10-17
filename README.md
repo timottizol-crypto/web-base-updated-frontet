@@ -1,29 +1,47 @@
-# Inheritance
+export interface IPersonData {
+name: string;
+secondName: string;
+age: number;
+}
 
-Установите зависимости:
+export interface IStudentData extends IPersonData {
+phone: string;
+}
 
-```
-npm install
-```
-
-В файле `src/Inheritance.ts` выполните следующие задания:
-
-1. Напишите конструкторы для классов `Person` и `Student`, которые принимают в качестве параметра объекты с интерфейсами `IPersonData` и `IStudentData` соответственно
-
-```TypeScript
 export class Person {
-    readonly _name: string;
-    readonly _secondName: string;
-    readonly _age: number;
+readonly \_name: string;
+readonly \_secondName: string;
+readonly \_age: number;
+
+    constructor(data: IPersonData) {
+        this._name = data.name;
+        this._secondName = data.secondName;
+        this._age = data.age;
+    }
+
+    getData(): IPersonData {
+        return {
+            name: this._name,
+            secondName: this._secondName,
+            age: this._age
+        };
+    }
+
 }
 
 export class Student extends Person {
-    readonly _phone: string;
+readonly \_phone: string;
+
+    constructor(data: IStudentData) {
+        super(data);
+        this._phone = data.phone;
+    }
+
+    getData(): IStudentData {
+        return {
+            ...super.getData(),
+            phone: this._phone
+        };
+    }
+
 }
-```
-
-2. Дополните классы `Person` и `Student` методами `getData` с возвращаемыми значениями по интерфейсам `IPersonData` и `IStudentData` соответственно
-
-Проверить себя можно запустив команду `npm run test`.
-
-После выполнения задания создайте pull request с решением.
